@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Blog</title>
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Blog</h1>
+
+        <form action="/add" method="post" class="blog-form">
+            <label for="title">Blog Title:</label>
+            <input type="text" id="title" name="title" required placeholder="Enter blog title">
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required placeholder="Enter author name">
+
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" rows="10" required placeholder="Enter blog content"></textarea>
+
+            <button type="submit">Submit Blog</button>
+        </form>
+    </div>
+
+</body>
+</html>
