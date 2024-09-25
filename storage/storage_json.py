@@ -18,6 +18,13 @@ class StorageJson(IStorage):
         """Retrieve and optionally filter or sort posts from the database."""
         return self.blogs
 
+    def fetch_blog_by_id(self, id):
+        """Retrieve and optionally post from the database by id."""
+        for blog in self.blogs:
+            if blog['id'] == id:
+                return blog
+        return None
+
     def add_blog(self, title, content, author):
         """Add a new blog to the database."""
 
@@ -26,12 +33,13 @@ class StorageJson(IStorage):
         self.rewrite_data()
         return True
 
-    def update_blog(self, id, title, content):
+    def update_blog(self, id, title, author, content):
         """update blog from the database."""
         for blog in self.blogs:
             if blog['id'] == id:
                 blog['title'] = title
                 blog['content'] = content
+                blog['author'] = author
                 self.rewrite_data()
                 return True
         return False

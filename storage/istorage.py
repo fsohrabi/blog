@@ -11,7 +11,7 @@ class IStorage(ABC):
         pass
 
     @abstractmethod
-    def update_blog(self, id, title, content):
+    def update_blog(self, id, title, author, content):
         pass
 
     @abstractmethod

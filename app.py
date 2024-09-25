@@ -22,5 +22,31 @@ def add():
     return render_template('add.html')
 
 
+@app.route('/delete/<string:post_id>')
+def delete(post_id):
+    storage.delete_blog(post_id)
+    return redirect(url_for('index'))
+
+
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.route('/update/<string:post_id>', methods=['GET', 'POST'])
+def update(post_id):
+    # Fetch the blog posts from the JSON file
+    post = storage.fetch_blog_by_id(post_id)
+    if post is None:
+        # Post not found
+        return render_template('404.html')
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        author = request.form['author']
+        storage.update_blog(post_id, title, author, content)
+        return redirect(url_for('index'))
+    return render_template('update.html', post=post)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5004)

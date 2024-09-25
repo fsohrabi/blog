@@ -9,23 +9,28 @@
 <body>
  <div class="container">
     <h1>Welcome to My Flask Blog!</h1>
-      <!-- Link to Add Blog Page -->
-        <div class="add-blog-link">
+     {% if blogs %}
+         <div class="add-blog-link">
             <a href="/add" class="add-blog-button">Add New Blog</a>
         </div>
-
+     {% endif %}
      <div class="blog-posts">
+         <!-- Link to Add Blog Page -->
         {% if blogs %}
         {% for post in blogs %}
         <div class="post-card">
             <h2>{{ post['title']}}</h2>
             <p><strong>Author:</strong>  {{ post['author']}}</p>
             <p>{{ post['content']}}</p>
+            <div class="post-actions">
+                <a href="{{url_for('update', post_id=post['id']) }}" class="update-post">Update</a>
+                <a href="{{url_for('delete', post_id=post['id']) }}" class="delete-post">Delete</a>
+            </div>
         </div>
        {% endfor %}
          {% else %}
            <div class="empty-block">
-               <p>No blogs available. Why not <a href="add-blog.html">add a new blog</a>?</p>
+               <p>No blogs available. Why not <a href="/add">add a new blog</a>?</p>
            </div>
         {% endif %}
  </div>
