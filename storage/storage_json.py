@@ -5,6 +5,7 @@ from storage.istorage import IStorage
 
 
 def generate_simple_uuid():
+    """return uuid"""
     return str(uuid.uuid4())
 
 
@@ -15,11 +16,11 @@ class StorageJson(IStorage):
         self.blogs = self.load_data()  # Load existing data
 
     def list_blogs(self):
-        """Retrieve and optionally filter or sort posts from the database."""
+        """Retrieve blogs from the database."""
         return self.blogs
 
     def fetch_blog_by_id(self, id):
-        """Retrieve and optionally post from the database by id."""
+        """Retrieve blog from the database by id."""
         for blog in self.blogs:
             if blog['id'] == id:
                 return blog
@@ -45,7 +46,7 @@ class StorageJson(IStorage):
         return False
 
     def update_like(self, id):
-        """update like of blog from the database."""
+        """update count of blogs likes  from the database."""
         for blog in self.blogs:
             if blog['id'] == id:
                 blog['likes'] += 1
@@ -54,7 +55,7 @@ class StorageJson(IStorage):
         return False
 
     def delete_blog(self, id):
-        """Delete a blog from the database by title."""
+        """Delete a blog from the database by id."""
         for blog in self.blogs:
             if blog['id'] == id:
                 self.blogs.remove(blog)

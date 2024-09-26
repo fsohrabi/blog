@@ -7,12 +7,19 @@ storage = StorageJson()
 
 @app.route('/')
 def index():
+    """
+    Route for the index page. Displays the list of all blog posts.
+    """
     blogs = storage.list_blogs()
     return render_template('index.html', blogs=blogs)
 
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
+    """
+    Route for adding a new blog post.
+    Handles both GET (display the form) and POST (submit the form) requests.
+    """
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
@@ -24,18 +31,27 @@ def add():
 
 @app.route('/delete/<string:post_id>')
 def delete(post_id):
+    """
+    Route for deleting a blog post by its post ID.
+    """
     storage.delete_blog(post_id)
     return redirect(url_for('index'))
 
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """
+    Custom handler for 404 errors. Renders a custom 404 page.
+    """
     return render_template('404.html'), 404
 
 
 @app.route('/update/<string:post_id>', methods=['GET', 'POST'])
 def update(post_id):
-    # Fetch the blog posts from the JSON file
+    """
+    Route for updating a blog post.
+    Handles both GET (display the current post info) and POST (submit the update) requests.
+    """
     post = storage.fetch_blog_by_id(post_id)
     if post is None:
         # Post not found
@@ -51,7 +67,9 @@ def update(post_id):
 
 @app.route('/like/<string:post_id>', methods=['POST'])
 def like(post_id):
-    # Fetch the blog posts from the JSON file
+    """
+    Route for liking a blog post. Increments the like counter for the post by its post ID.
+    """
     post = storage.fetch_blog_by_id(post_id)
     if post is None:
         # Post not found
