@@ -23,6 +23,9 @@
             <p><strong>Author:</strong>  {{ post['author']}}</p>
             <p>{{ post['content']}}</p>
             <div class="post-actions">
+                 <form action="{{ url_for('like', post_id=post['id']) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="like-button">Like ({{ post.likes }})</button>
+                </form>
                 <a href="{{url_for('update', post_id=post['id']) }}" class="update-post">Update</a>
                 <a href="{{url_for('delete', post_id=post['id']) }}" class="delete-post">Delete</a>
             </div>

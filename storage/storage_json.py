@@ -29,7 +29,7 @@ class StorageJson(IStorage):
         """Add a new blog to the database."""
 
         self.blogs.append(
-            {"id": generate_simple_uuid(), 'title': title, 'content': content, 'author': author})
+            {"id": generate_simple_uuid(), 'title': title, 'content': content, 'author': author, 'likes': 0})
         self.rewrite_data()
         return True
 
@@ -40,6 +40,15 @@ class StorageJson(IStorage):
                 blog['title'] = title
                 blog['content'] = content
                 blog['author'] = author
+                self.rewrite_data()
+                return True
+        return False
+
+    def update_like(self, id):
+        """update like of blog from the database."""
+        for blog in self.blogs:
+            if blog['id'] == id:
+                blog['likes'] += 1
                 self.rewrite_data()
                 return True
         return False

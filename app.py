@@ -48,5 +48,17 @@ def update(post_id):
     return render_template('update.html', post=post)
 
 
+@app.route('/like/<string:post_id>', methods=['POST'])
+def like(post_id):
+    # Fetch the blog posts from the JSON file
+    post = storage.fetch_blog_by_id(post_id)
+    if post is None:
+        # Post not found
+        return render_template('404.html')
+    if request.method == 'POST':
+        storage.update_like(post_id)
+        return redirect(url_for('index'))
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5004)
